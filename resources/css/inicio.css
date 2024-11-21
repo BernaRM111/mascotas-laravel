@@ -1,11 +1,11 @@
-body {
+/* body {
     font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
     line-height: 1.6;
     color: #4b4b4b;
     background-color: #f4f1ed;
-}
+} */
 
 header, footer {
     background-color: #6d9886;
@@ -20,7 +20,7 @@ header, footer {
     padding: 20px;
 }
 
-h1, h2, h3 {
+/* h1, h2, h3 {
     color: #4b4b4b;
 }
 
@@ -108,4 +108,4 @@ h1, h2, h3 {
 footer p {
     font-size: 0.9em;
     color: #ffffff;
-}
+} */

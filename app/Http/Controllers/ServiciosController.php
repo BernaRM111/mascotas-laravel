@@ -1,64 +1,55 @@
 <?php
-
 namespace App\Http\Controllers;
 
+use App\Models\Servicio;
 use Illuminate\Http\Request;
 
 class ServiciosController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        return view('servicios');
+        $servicios = Servicio::all();
+        return view('servicios', compact('servicios'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'nombre' => 'required|string|max:255',
+            'descripcion' => 'nullable|string',
+            'precio' => 'required|numeric|min:0',
+        ]);
+
+        Servicio::create($validated);
+        return redirect()->route('servicios.index')->with('success', 'Servicio agregado correctamente.');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function edit($id)
     {
-        //
+        $servicio = Servicio::findOrFail($id);
+        return response()->json($servicio);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function update(Request $request, $id)
     {
-        //
+        $validated = $request->validate([
+            'nombre' => 'required|string|max:255',
+            'descripcion' => 'nullable|string',
+            'precio' => 'required|numeric|min:0',
+        ]);
+
+        $servicio = Servicio::findOrFail($id);
+        $servicio->update($validated);
+
+        return redirect()->route('servicios.index')->with('success', 'Servicio actualizado correctamente.');
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function destroy($id)
     {
-        //
+    $servicio = Servicio::findOrFail($id);
+    $servicio->update(['activo' => false]);
+
+    return redirect()->route('servicios.index')->with('success', 'Servicio eliminado lógicamente.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
 }

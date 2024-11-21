@@ -9,12 +9,16 @@ use App\Http\Controllers\MascotasController;
 
 Route::get('/', [IndexController::class, 'index']);
 Route::get('/nosotros', [NosotrosController::class, 'index']);
-Route::get('/servicios', [ServiciosController::class, 'index']);
-Route::get('/citas', [CitasController::class, 'index']);
-Route::get('/mascotas', [MascotasController::class, 'index']);
+// Route::get('/servicios', [ServiciosController::class, 'index']);
+// Route::get('/citas', [CitasController::class, 'index']);
+// Route::get('/mascotas', [MascotasController::class, 'index']);
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+Route::resource('mascotas', MascotasController::class);
+Route::resource('servicios', ServiciosController::class);
+Route::resource('citas', CitasController::class);
+
+
+
+
 
 

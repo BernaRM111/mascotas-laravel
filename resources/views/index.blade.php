@@ -2,45 +2,71 @@
 
 @section('content')
 
-<section class="hero">
-        <div class="container">
-            <h1>Impulsando la Salud del Futuro</h1>
-            <p>Nuestra misión es revolucionar el cuidado de la salud a través de la tecnología, brindando a los pacientes herramientas para un mejor manejo de sus condiciones crónicas.</p>
-        </div>
-    </section>
+<!-- Hero Section -->
+<section class="hero text-white text-center py-5" style="background: linear-gradient(135deg, #343a40, #007bff);">
+    <div class="container">
+        <h1 class="display-4 fw-bold">Cuidando a Tus Mascotas con Amor y Profesionalismo</h1>
+        <p class="lead mt-3">Nuestra misión es ofrecer el mejor cuidado para tus mascotas, combinando experiencia y dedicación para que siempre estén felices y saludables.</p>
+    </div>
+</section>
 
-    <!-- Sección de Características -->
-    <section class="features">
-        <div class="container">
-            <h2>Lo Que Nos Hace Únicos</h2>
-            <div class="feature">
-                <h3>Integración Tecnológica</h3>
-                <p>Nuestras soluciones se integran perfectamente en la vida diaria, facilitando el monitoreo de la salud sin complicaciones.</p>
-            </div>
-            <div class="feature">
-                <h3>Atención Centrada en el Paciente</h3>
-                <p>Colocamos al paciente en el centro de nuestras decisiones, asegurando que cada solución esté diseñada para sus necesidades específicas.</p>
-            </div>
-            <div class="feature">
-                <h3>Educación y Concienciación</h3>
-                <p>Ofrecemos recursos y apoyo educativo para empoderar a los pacientes en la gestión de su salud.</p>
-            </div>
-        </div>
-    </section>
 
-    <!-- Sección de Beneficios -->
-    <section class="benefits">
-        <div class="container">
-            <h2>Beneficios que Marcan la Diferencia</h2>
-            <div class="benefit">
-                <h3>Empoderamiento del Paciente</h3>
-                <p>Con nuestras herramientas, los pacientes tienen el control de su salud y el conocimiento para tomar decisiones informadas.</p>
+<!-- Features Section -->
+<section class="features py-5">
+    <div class="container">
+        <h2 class="text-center fw-bold mb-5">Lo Que Nos Hace Únicos</h2>
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center">
+                        <h3 class="card-title">Cuidado Integral</h3>
+                        <p class="card-text">Ofrecemos un servicio completo que cubre todas las necesidades de salud, bienestar y entretenimiento de tu mascota.</p>
+                    </div>
+                </div>
             </div>
-            <div class="benefit">
-                <h3>Conexión con Profesionales</h3>
-                <p>Facilitamos la comunicación directa con equipos de salud, asegurando que nunca estés solo en tu camino hacia la recuperación.</p>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center">
+                        <h3 class="card-title">Atención Personalizada</h3>
+                        <p class="card-text">Nos aseguramos de conocer a cada mascota y adaptamos nuestros servicios a sus necesidades y personalidad únicas.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center">
+                        <h3 class="card-title">Educación para Dueños</h3>
+                        <p class="card-text">Brindamos orientación y consejos a los dueños para ayudarles a entender y mejorar la calidad de vida de sus mascotas.</p>
+                    </div>
+                </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
+
+<!-- Benefits Section -->
+<section class="benefits bg-light py-5">
+    <div class="container">
+        <h2 class="text-center fw-bold mb-5">Beneficios que Marcan la Diferencia</h2>
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center">
+                        <h3 class="card-title">Tranquilidad para el Dueño</h3>
+                        <p class="card-text">Nuestros servicios están diseñados para que siempre tengas la seguridad de que tu mascota está en las mejores manos.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center">
+                        <h3 class="card-title">Vínculo con Especialistas</h3>
+                        <p class="card-text">Contamos con un equipo de veterinarios y especialistas que estarán a tu lado en cada etapa del cuidado de tu mascota.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
 @endsection

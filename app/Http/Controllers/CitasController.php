@@ -1,64 +1,43 @@
-<?php
+<?php 
 
 namespace App\Http\Controllers;
 
+use App\Models\Cita;
+use App\Models\Mascota;
+use App\Models\Servicio;
 use Illuminate\Http\Request;
 
 class CitasController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        return view('citas');
+        $citas = Cita::with('mascota', 'servicio')->get();
+        $mascotas = Mascota::all();
+        $servicios = Servicio::all();
+
+        return view('citas', compact('citas', 'mascotas', 'servicios'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        Cita::create($request->all());
+        return redirect()->route('citas.index')->with('success', 'Cita agregada correctamente.');
+        
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function update(Request $request, $id)
     {
-        //
+        $cita = Cita::findOrFail($id);
+        $cita->update($request->all());
+        return redirect()->route('citas.index')->with('success', 'Cita actualizada correctamente.');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function destroy($id)
     {
-        //
-    }
+        $cita = Cita::findOrFail($id);
+        $cita->update(['activo' => false]);
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        return redirect()->route('citas.index')->with('success', 'Cita eliminada lógicamente.');
     }
 }

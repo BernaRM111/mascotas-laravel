@@ -2,30 +2,159 @@
 
 @section('content')
 
-<section class="hero">
-        <div class="container">
-            <h1>Agenda una Cita para tu Mascota</h1>
-            <p>Facilitamos el proceso de agendar una cita para tu mascota, asegurando que siempre reciba la atención que necesita.</p>
-        </div>
-    </section>
+<section class="hero text-white text-center py-5" style="background: linear-gradient(135deg, #343a40, #17a2b8);">
+    <div class="container">
+        <h1 class="display-4 fw-bold">Gestión de Citas</h1>
+        <p class="lead mt-3">Administra las citas de tus mascotas y controla su estado de forma eficiente. Agrega, edita o elimina citas según sea necesario.</p>
+    </div>
+</section>
 
-    <!-- Sección de Citas -->
-    <section class="features">
-        <div class="container">
-            <h2>Cómo Funciona el Proceso de Cita</h2>
-            <div class="feature">
-                <h3>Elige tu Tipo de Cita</h3>
-                <p>Selecciona entre consultas generales, emergencias o seguimientos especiales según las necesidades de tu mascota.</p>
-            </div>
-            <div class="feature">
-                <h3>Selecciona el Horario</h3>
-                <p>Elige el día y la hora que más te convenga, con opciones flexibles para que te acomodes a tu agenda.</p>
-            </div>
-            <div class="feature">
-                <h3>Confirmación Instantánea</h3>
-                <p>Una vez que hayas completado el proceso, recibirás una confirmación inmediata de tu cita.</p>
+<div class="container mt-5">
+    <h1>Gestión de Citas</h1>
+    <button  
+        class="btn btn-sm text-white fw-bold border-0" 
+        style="background-color: #343a40; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); font-size: 1.1rem;" 
+        data-bs-toggle="modal" 
+        data-bs-target="#modalCita" 
+        onclick="limpiarModal()">
+        + Agregar Cita
+    </button>
+    
+
+    @if(session('success'))
+        <div class="alert alert-success mt-3">
+            {{ session('success') }}
+        </div>
+    @endif
+
+    <div class="modal fade" id="modalCita" tabindex="-1" aria-labelledby="modalCitaLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalCitaLabel">Agregar/Editar Cita</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="formCita" method="POST" action="">
+                        @csrf
+                        <input type="hidden" id="citaId" name="id">
+                        
+                        <div class="mb-3">
+                            <label for="mascota" class="form-label">Mascota</label>
+                            <select id="mascota" name="mascota_id" class="form-select">
+                                @foreach($mascotas as $mascota)
+                                    <option value="{{ $mascota->id }}">{{ $mascota->nombre }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="servicio" class="form-label">Servicio</label>
+                            <select id="servicio" name="servicio_id" class="form-select">
+                                @foreach($servicios as $servicio)
+                                    <option value="{{ $servicio->id }}">{{ $servicio->nombre }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="fecha" class="form-label">Fecha</label>
+                            <input type="date" class="form-control" id="fecha" name="fecha">
+                        </div>
+                        <div class="mb-3">
+                            <label for="hora" class="form-label">Hora</label>
+                            <input type="time" class="form-control" id="hora" name="hora">
+                        </div>
+                        <div class="mb-3">
+                            <label for="estado" class="form-label">Estado</label>
+                            <select id="estado" name="estado" class="form-select">
+                                <option value="pendiente">Pendiente</option>
+                                <option value="realizado">Realizado</option>
+                                <option value="cancelado">Cancelado</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-success">Guardar</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    </form>
+                </div>
             </div>
         </div>
-    </section>
+    </div>
+
+    <table class="table mt-3">
+        <thead>
+            <tr>
+                <th>Mascota</th>
+                <th>Servicio</th>
+                <th>Fecha</th>
+                <th>Hora</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach($citas as $cita)
+                <tr>
+                    <td>{{ $cita->mascota->nombre }}</td>
+                    <td>{{ $cita->servicio->nombre }}</td>
+                    <td>{{ $cita->fecha }}</td>
+                    <td>{{ $cita->hora }}</td>
+                    <td>{{ ucfirst($cita->estado) }}</td>
+                    <td>
+                        <button class="btn btn-warning btn-sm"
+                            onclick="editarCita('{{ $cita->id }}', '{{ $cita->mascota_id }}', '{{ $cita->servicio_id }}', '{{ $cita->fecha }}', '{{ $cita->hora }}', '{{ $cita->estado }}')">
+                            <i class="bi bi-pencil-fill"></i>
+                        </button>
+                        <form action="{{ route('citas.destroy', $cita->id) }}" method="POST" style="display: inline-block;" onsubmit="return confirmarEliminacion()">
+                            @csrf
+                            @method('DELETE')
+                            <button class="btn btn-danger btn-sm" type="submit">
+                                <i class="bi bi-trash-fill"></i> Eliminar
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
+</div>
+
+<script>
+    function editarCita(id, mascota, servicio, fecha, hora, estado) {
+        document.getElementById('citaId').value = id;
+        document.getElementById('mascota').value = mascota;
+        document.getElementById('servicio').value = servicio;
+        document.getElementById('fecha').value = fecha;
+        document.getElementById('hora').value = hora;
+        document.getElementById('estado').value = estado;
+
+        document.getElementById('modalCitaLabel').textContent = 'Editar Cita';
+        document.getElementById('formCita').action = `/citas/${id}`;
+        document.getElementById('formCita').method = 'POST';
+        var hiddenMethod = document.createElement('input');
+        hiddenMethod.type = 'hidden';
+        hiddenMethod.name = '_method';
+        hiddenMethod.value = 'PUT';
+        document.getElementById('formCita').appendChild(hiddenMethod);
+
+        var modal = new bootstrap.Modal(document.getElementById('modalCita'));
+        modal.show();
+    }
+
+    function limpiarModal() {
+        document.getElementById('citaId').value = '';
+        document.getElementById('mascota').value = '';
+        document.getElementById('servicio').value = '';
+        document.getElementById('fecha').value = '';
+        document.getElementById('hora').value = '';
+        document.getElementById('estado').value = 'pendiente';
+
+        document.getElementById('modalCitaLabel').textContent = 'Agregar Cita';
+        document.getElementById('formCita').action = '/citas';
+        document.getElementById('formCita').method = 'POST';
+    }
+
+    function confirmarEliminacion() {
+        return confirm('¿Estás seguro de que deseas eliminar esta cita? Esta acción no se puede deshacer.');
+    }
+</script>
 
 @endsection
