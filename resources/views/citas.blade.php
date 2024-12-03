@@ -93,8 +93,8 @@
         <tbody>
             @foreach($citas as $cita)
                 <tr>
-                    <td>{{ $cita->mascota->nombre }}</td>
-                    <td>{{ $cita->servicio->nombre }}</td>
+                    <td>{{ $cita->mascota->nombre  ?? 'Sin asignar'  }}</td>
+                    <td>{{ $cita->servicio->nombre  ?? 'Sin asignar'  }}</td>
                     <td>{{ $cita->fecha }}</td>
                     <td>{{ $cita->hora }}</td>
                     <td>{{ ucfirst($cita->estado) }}</td>

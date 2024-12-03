@@ -41,6 +41,15 @@
                 <li class="nav-item">
                     <a class="nav-link text-white" href="{{ url('/citas') }}">Citas</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="{{ url('/historial_medico') }}">Historial</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="{{ url('/vacunacion') }}">Vacunacion</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="{{ url('/adopciones') }}">Adopciones</a>
+                </li>
             </ul>
         </div>
     </div>
